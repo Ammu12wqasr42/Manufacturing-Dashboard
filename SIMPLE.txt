@@ -1,0 +1,47 @@
+# 🎯 बस यही करो - बाकी सब भूल जाओ!
+
+## Terminal 1 में यह करो:
+
+```bash
+cd c:\Users\amans\OneDrive\Desktop\Dixon\backend
+npm start
+```
+
+**बस! Backend start हो गया।**
+
+---
+
+## Terminal 2 में यह करो (नया terminal खोलो):
+
+```bash
+cd c:\Users\amans\OneDrive\Desktop\Dixon\frontend
+npm install
+npm start
+```
+
+**3-5 मिनट wait करो...**
+
+Browser automatically खुल जाएगा।
+
+---
+
+## Login करो:
+
+```
+Email: operator@example.com
+Password: password123
+```
+
+---
+
+## 🎉 Done! 
+
+Dashboard ready है।
+
+---
+
+अगर कुछ error आए तो सिर्फ यह tell करना कि:
+- **क्या error message है?**
+- **कौन से terminal में error दिख रहा है?**
+
+मैं fix कर दूंगा! ✅
