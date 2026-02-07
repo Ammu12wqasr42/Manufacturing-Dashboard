@@ -1,2 +1,1 @@
-web: cd backend && npm install && npm run mock &
-web: cd frontend && npm install && node server.js
+web: npm install && npm install --prefix backend && npm install --prefix frontend && node start.js
