@@ -1,0 +1,19 @@
+{
+  "buildCommand": "cd backend && npm install && cd ../frontend && npm install",
+  "env": {
+    "REACT_APP_API_URL": "@see README.md"
+  },
+  "functions": {
+    "api/**: "backend"
+  },
+  "rewrites": [
+    {
+      "source": "/login.html",
+      "destination": "/public/login.html"
+    },
+    {
+      "source": "/dashboard.html",
+      "destination": "/public/dashboard.html"
+    }
+  ]
+}
