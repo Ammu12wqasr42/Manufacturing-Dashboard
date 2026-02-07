@@ -159,17 +159,18 @@ app.delete('/api/production/lines/:id', authMiddleware, (req, res) => {
   res.json({ message: 'Deleted' });
 });
 
-// Serve frontend
+// Root route
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/public/login.html'));
+  res.redirect('/login.html');
 });
 
-app.get('/login.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/public/login.html'));
-});
-
-app.get('/dashboard.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/public/dashboard.html'));
+// 404 - serve login.html for any unmatched route (SPA fallback)
+app.use((req, res) => {
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.join(__dirname, 'frontend/public/login.html'));
+  } else {
+    res.status(404).json({ message: 'API not found' });
+  }
 });
 
 // Socket.io
