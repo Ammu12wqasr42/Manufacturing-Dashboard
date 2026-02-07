@@ -516,7 +516,8 @@
     </div>
 
     <script>
-        const API_URL = 'http://192.168.0.161:5000/api';
+        // Use relative URL - works everywhere (localhost, LAN, cloud)
+        const API_URL = '/api';
         let currentEditId = null;
 
         // Check if user is logged in
