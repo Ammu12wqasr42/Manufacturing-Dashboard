@@ -1,6 +1,6 @@
 {
   "name": "manufacturing-dashboard",
-  "version": "1.0.0",
+  "version": "22.22.0",
   "description": "Manufacturing Production Dashboard",
   "main": "server.js",
   "scripts": {
