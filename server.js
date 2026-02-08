@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
@@ -154,7 +155,6 @@ app.post('/api/production', authMiddleware, (req, res) => {
     createdAt: new Date()
   };
   mockProductionLogs.unshift(newLog);
-  io.emit('dataUpdated', newLog);
   res.status(201).json(newLog);
 });
 
@@ -162,7 +162,6 @@ app.put('/api/production/:id', authMiddleware, (req, res) => {
   const log = mockProductionLogs.find(l => l._id === req.params.id);
   if (!log) return res.status(404).json({ message: 'Log not found' });
   Object.assign(log, req.body);
-  io.emit('dataUpdated', log);
   res.json(log);
 });
 
@@ -199,16 +198,34 @@ app.delete('/api/production/lines/:id', authMiddleware, (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.redirect('/login.html');
+  const loginPath = path.join(__dirname, 'frontend/public/login.html');
+  if (fs.existsSync(loginPath)) {
+    return res.sendFile(loginPath);
+  }
+  res.status(404).send('login.html not found');
 });
 
-// 404 - serve login.html for any unmatched route (SPA fallback)
-app.use((req, res) => {
-  if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(__dirname, 'frontend/public/login.html'));
-  } else {
-    res.status(404).json({ message: 'API not found' });
+// Direct login.html route
+app.get('/login.html', (req, res) => {
+  const loginPath = path.join(__dirname, 'frontend/public/login.html');
+  if (fs.existsSync(loginPath)) {
+    return res.sendFile(loginPath);
   }
+  res.status(404).send('login.html not found');
+});
+
+// SPA fallback - serve login.html for any non-API route without matching static file
+app.use((req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ message: 'API not found' });
+  }
+  const loginPath = path.join(__dirname, 'frontend/public/login.html');
+  res.sendFile(loginPath, (err) => {
+    if (err) {
+      console.error('❌ Error serving login.html:', err.message);
+      res.status(404).send('File not found');
+    }
+  });
 });
 
 // Socket.io (optional - comment out if not needed)
