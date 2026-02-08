@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
+import { Analytics } from '@vercel/analytics/react';
 import Login from './components/Login';
 import DataEntryForm from './components/DataEntryForm';
 import ProductionTable from './components/ProductionTable';
@@ -205,6 +206,7 @@ function App() {
           <p>© 2024 Manufacturing Production Dashboard. All rights reserved.</p>
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 }
