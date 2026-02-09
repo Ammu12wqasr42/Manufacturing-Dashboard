@@ -16,27 +16,7 @@ const publicPath = path.resolve(__dirname, 'frontend/public');
 console.log('📁 Serving static files from:', publicPath);
 app.use(express.static(publicPath));
 
-function normalizeClientIp(raw) {
-  if (!raw) return null;
-  // X-Forwarded-For may contain a list
-  let ip = raw.split(',')[0].trim();
-  // handle IPv6 mapped IPv4
-  if (ip.startsWith('::ffff:')) ip = ip.split('::ffff:')[1];
-  // remove port if present
-  if (ip.includes(':') && ip.split('.').length !== 4) ip = ip.split(':')[0];
-  return ip;
-}
 
-app.use('/api', (req, res, next) => {
-  const xff = req.header('x-forwarded-for');
-  const remote = req.connection && req.connection.remoteAddress ? req.connection.remoteAddress : (req.socket && req.socket.remoteAddress ? req.socket.remoteAddress : req.ip);
-  const clientIp = normalizeClientIp(xff || remote);
-  // allow if any CIDR contains this IP
-  for (const cidr of allowedCidrs) {
-    if (cidrContains(cidr, clientIp)) return next();
-  }
-  return res.status(403).json({ message: 'Access denied: your IP is not whitelisted' });
-});
 
 // Mock database
 const mockUsers = [
