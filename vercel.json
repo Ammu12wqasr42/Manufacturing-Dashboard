@@ -4,7 +4,7 @@
     "REACT_APP_API_URL": "@see README.md"
   },
   "functions": {
-    "api/**: "backend"
+    "api/**": "backend"
   },
   "rewrites": [
     {
