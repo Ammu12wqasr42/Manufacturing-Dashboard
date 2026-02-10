@@ -51,6 +51,7 @@ app.use('/api', (req, res, next) => {
   const xff = req.header('x-forwarded-for');
   const remote = req.connection && req.connection.remoteAddress ? req.connection.remoteAddress : (req.socket && req.socket.remoteAddress ? req.socket.remoteAddress : req.ip);
   const clientIp = normalizeClientIp(xff || remote);
+  // allow if any CIDR contains this IP
   for (const cidr of allowedCidrs) {
     if (cidrContains(cidr, clientIp)) return next();
   }
