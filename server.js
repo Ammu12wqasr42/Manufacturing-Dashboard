@@ -17,8 +17,7 @@ console.log('📁 Serving static files from:', publicPath);
 app.use(express.static(publicPath));
 
 // IP allowlist for API routes (allow specific CIDR ranges + localhost)
-const allowedCidrs = ['74.220.48.0/24', '74.220.56.0/24', '127.0.0.1/32', '::1/128'];
-
+const allowedCidrs = ['74.220.48.0/24', '74.220.56.0/24', '127.0.0.1/32', '::1/128', '::ffff:127.0.0.1/128'];
 function ipToInt(ip) {
   const parts = ip.split('.').map(p => parseInt(p, 10));
   if (parts.length !== 4 || parts.some(isNaN)) return null;
@@ -52,7 +51,6 @@ app.use('/api', (req, res, next) => {
   const xff = req.header('x-forwarded-for');
   const remote = req.connection && req.connection.remoteAddress ? req.connection.remoteAddress : (req.socket && req.socket.remoteAddress ? req.socket.remoteAddress : req.ip);
   const clientIp = normalizeClientIp(xff || remote);
-  // allow if any CIDR contains this IP
   for (const cidr of allowedCidrs) {
     if (cidrContains(cidr, clientIp)) return next();
   }
