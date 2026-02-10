@@ -10,7 +10,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: process.env.REACT_APP_API_URL || 'http://localhost:3000',
+    origin: process.env.REACT_APP_API_URL || 'http://localhost:5000',
     methods: ['GET', 'POST']
   }
 });

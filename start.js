@@ -18,7 +18,7 @@ const frontendProcess = spawn('node', ['frontend/server.js'], {
 
 console.log('🚀 Manufacturing Dashboard - Starting...');
 console.log('📌 Backend: http://localhost:5000');
-console.log('📌 Frontend: http://localhost:3000');
+console.log('📌 Frontend: http://localhost:5000');
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
